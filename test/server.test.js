@@ -4,7 +4,14 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { loadConfig } from '../src/config.js';
-import { createServer } from '../server.js';
+import { createServer, listenErrorMessage } from '../server.js';
+
+test('listenErrorMessage explains a busy port and how to pick another', () => {
+  const msg = listenErrorMessage(Object.assign(new Error('x'), { code: 'EADDRINUSE' }), 4747);
+  assert.match(msg, /4747 is already in use/);
+  assert.match(msg, /AMC_PORT=/);
+  assert.match(listenErrorMessage(Object.assign(new Error('denied'), { code: 'EACCES' }), 80), /denied/);
+});
 
 const fakeHub = { snapshot: () => ({ ok: 1 }), subscribe: () => () => {} };
 

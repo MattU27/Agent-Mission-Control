@@ -45,11 +45,21 @@ export function createServer(hub) {
   });
 }
 
+export function listenErrorMessage(err, port) {
+  return err.code === 'EADDRINUSE'
+    ? `Port ${port} is already in use — Mission Control may already be running at http://127.0.0.1:${port}.\nTo run another instance, pick a free port, e.g.:  AMC_PORT=4748 npm start`
+    : `Mission Control could not listen on 127.0.0.1:${port}: ${err.message}`;
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === normalize(process.argv[1])) {
   const { loadConfig } = await import('./src/config.js');
   const { createHub } = await import('./src/hub.js');
   const cfg = loadConfig();
   const hub = createHub(cfg);
-  hub.start();
-  createServer(hub).listen(cfg.port, '127.0.0.1', () => console.log(`Mission Control → http://127.0.0.1:${cfg.port}`));
+  const server = createServer(hub);
+  server.on('error', err => { console.error(listenErrorMessage(err, cfg.port)); process.exit(1); });
+  server.listen(cfg.port, '127.0.0.1', () => {
+    hub.start(); // only poll once we actually own the port
+    console.log(`Mission Control → http://127.0.0.1:${cfg.port}`);
+  });
 }

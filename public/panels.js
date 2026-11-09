@@ -1,4 +1,4 @@
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock, refillIn, sessionWhen } from './lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock, refillIn, sessionWhen, comboTotals, entriesLabel, rowState } from './lib.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const set = (el, html) => { if (el.__h !== html) { el.innerHTML = html; el.__h = html; } };
@@ -65,14 +65,14 @@ export function tide(el, snap) {
   const lastCall = o.calls.find(c => c.status < 400);
   const rows = o.accounts.map(a => {
     const live = lastCall?.connectionId === a.id;
-    const note = !a.active ? (a.lastError ?? 'disabled') : a.rateLimitedUntil && Date.parse(a.rateLimitedUntil) > Date.now()
+    const state = rowState(a);
+    const note = state === 'off' ? (a.lastError ?? 'disabled') : state === 'cooling'
       ? `cooling down · ${fmtDur(Date.parse(a.rateLimitedUntil) - Date.now())}` : a.quota.plan ?? '';
-    const bad = !a.active || (a.rateLimitedUntil && Date.parse(a.rateLimitedUntil) > Date.now());
     const sounded = a.quota.fetchedAt ? Date.parse(a.quota.fetchedAt) : null;
-    return `<tr class="${a.active ? '' : 'off'}">
+    return `<tr class="${state}">
       <td class="pri num">${a.priority}</td>
       <td class="who"><span class="line"><span class="buoy ${live ? '' : 'idle'}" title="${live ? 'served the latest call' : ''}"></span><span class="name">${esc(shortAccount(a.email))}</span></span>
-        <span class="note ${bad ? 'haz' : ''}" title="${esc(note)}">${esc(note)}</span></td>
+        <span class="note ${state ? 'haz' : ''}" title="${esc(note)}">${esc(note)}</span></td>
       ${WINDOWS.map(([k, g, p]) => `<td class="w">${gauge(a.quota[k], `${g} ${p}`)}</td>`).join('')}
       <td class="sounded ${a.quota.stale ? 'stale' : ''}" title="quota last fetched">${sounded ? ago(sounded) : 'never'}</td>
     </tr>`;
@@ -88,8 +88,9 @@ export function routes(el, snap) {
   if (!o) return set(el, '<p class="empty">Waiting for OmniRoute…</p>');
   set(el, o.combos.map(c => {
     const hits = stepHits(c, o.calls);
-    const total = hits.reduce((s, h) => s + h.hits, 0);
-    return `<div class="route"><div class="rname">${esc(c.name)}<small>${total} call${total === 1 ? '' : 's'}</small></div>
+    const t = comboTotals(c, o.calls);
+    const sub = `${t.calls} call${t.calls === 1 ? '' : 's'}${t.errors ? ` · <span class="haz" title="${t.unrouted} failed before reaching a model">${t.errors} err</span>` : ''}`;
+    return `<div class="route"><div class="rname">${esc(c.name)}<small>${sub}</small></div>
       <ol class="stations" aria-label="${esc(c.name)} fallback order">${hits.map(h => `
         <li class="station ${h.hits ? 'hot' : ''} ${h.latest ? 'latest' : ''}" style="list-style:none">
           <div class="m">${esc(shortModel(h.model))}</div>
@@ -159,7 +160,7 @@ export function memory(el, snap) {
     const pct = Math.min(100, (100 * x.chars) / x.limit);
     return `<div class="mem"><span class="name">${name}</span><span class="fill ${pct >= 90 ? 'full' : ''}" role="img" aria-label="${name} ${Math.round(pct)}% of limit"><i style="width:${pct}%"></i></span>
       <span class="n">${x.chars.toLocaleString()} / ${x.limit.toLocaleString()}</span>
-      <span class="entries" title="${esc(x.entries.join('\n\n'))}">${x.entries.length} entr${x.entries.length === 1 ? 'y' : 'ies'} · ${esc(x.entries.map(e => e.split(/\s+/).slice(0, 3).join(' ').replace(/[:,.(]+$/, '')).join(' · '))}</span></div>`;
+      <span class="entries" title="${esc(x.entries.join('\n\n'))}">${esc(entriesLabel(x.entries))}</span></div>`;
   };
   set(el, line('Agent', m.memory) + line('User', m.user));
 }

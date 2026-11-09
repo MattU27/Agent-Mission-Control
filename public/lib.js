@@ -60,13 +60,37 @@ export function callsPerMin(calls, now = Date.now()) {
   return Math.round(calls.filter(c => now - Date.parse(c.ts) <= 300e3).length / 5);
 }
 
+const bareModel = m => (m ?? '').replace(/^[^/]+\//, '');
+
 export function stepHits(combo, calls) {
   const mine = calls.filter(c => c.combo === combo.name);
   const latest = mine.reduce((a, c) => (!a || c.ts > a.ts ? c : a), null);
   return combo.steps.map(s => {
-    const on = mine.filter(c => c.model === s.model);
-    return { model: s.model, hits: on.length, errors: on.filter(c => c.status >= 400).length, latest: latest?.model === s.model };
+    const on = mine.filter(c => bareModel(c.model) === s.model);
+    return { model: s.model, hits: on.length, errors: on.filter(c => c.status >= 400).length, latest: bareModel(latest?.model) === s.model };
   });
+}
+
+// whole-route totals: includes calls that failed before reaching any step (logged with the combo name or no model)
+export function comboTotals(combo, calls) {
+  const steps = new Set(combo.steps.map(s => s.model));
+  const mine = calls.filter(c => c.combo === combo.name);
+  return {
+    calls: mine.length,
+    errors: mine.filter(c => c.status >= 400).length,
+    unrouted: mine.filter(c => !steps.has(bareModel(c.model))).length,
+  };
+}
+
+export function entriesLabel(entries) {
+  const n = `${entries.length} entr${entries.length === 1 ? 'y' : 'ies'}`;
+  if (!entries.length) return n;
+  return `${n} · ${entries.map(e => e.split(/\s+/).slice(0, 3).join(' ').replace(/[:,.(]+$/, '')).join(' · ')}`;
+}
+
+export function rowState(a, now = Date.now()) {
+  if (!a.active) return 'off';
+  return a.rateLimitedUntil && Date.parse(a.rateLimitedUntil) > now ? 'cooling' : '';
 }
 
 export function todayTokens(rows, day) {

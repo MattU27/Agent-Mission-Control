@@ -99,6 +99,7 @@ table { border-collapse: collapse; width: 100%; }
 .tt .who .note.haz { color: var(--hazard); }
 .tt tr.off td:not(.w) { opacity: 0.6; }
 .tt tr.off .gauge { opacity: 0.4; }
+.tt tr.cooling td { opacity: 0.78; } /* subtle: still routable soon, red note carries the reason */
 .tt .sounded { font-size: 0.8rem; color: var(--ink-3); white-space: nowrap; text-align: right; padding-right: 0; }
 .tt .sounded.stale { color: var(--buoy); }
 .buoy { display: inline-block; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--buoy); margin-right: 6px; }

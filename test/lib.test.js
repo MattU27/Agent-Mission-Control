@@ -1,6 +1,38 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, refillIn, sessionWhen } from '../public/lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, refillIn, sessionWhen, comboTotals, entriesLabel, rowState } from '../public/lib.js';
+
+test('comboTotals counts every call tagged with the combo, incl. ones that never reached a step', () => {
+  const combo = { name: 'agy-brain', steps: [{ model: 'claude-opus-5-5-high' }, { model: 'claude-sonnet-5-5-high' }] };
+  const calls = [
+    { combo: 'agy-brain', model: 'claude-opus-5-5-high', status: 200 },
+    { combo: 'agy-brain', model: 'antigravity/claude-sonnet-5-5-high', status: 429 },
+    { combo: 'agy-brain', model: 'agy-brain', status: 400 },   // failed at gateway before routing
+    { combo: 'agy-brain', model: null, status: 503 },
+    { combo: 'agy-fast', model: 'claude-opus-5-5-high', status: 500 },
+  ];
+  assert.deepEqual(comboTotals(combo, calls), { calls: 4, errors: 3, unrouted: 2 });
+});
+
+test('stepHits matches provider-prefixed call models', () => {
+  const combo = { name: 'agy-brain', steps: [{ model: 'claude-opus-5-5-high' }] };
+  const r = stepHits(combo, [{ combo: 'agy-brain', model: 'antigravity/claude-opus-5-5-high', status: 200, ts: 'a' }]);
+  assert.equal(r[0].hits, 1);
+});
+
+test('entriesLabel has no trailing separator when empty', () => {
+  assert.equal(entriesLabel([]), '0 entries');
+  assert.equal(entriesLabel(['Developer on Windows 11, prefers']), '1 entry · Developer on Windows');
+  assert.equal(entriesLabel(['A: x', 'B c d e']), '2 entries · A: x · B c d');
+});
+
+test('rowState: disabled → off, rate-limited → cooling, else normal', () => {
+  const now = Date.parse('2026-11-09T05:00:00Z');
+  assert.equal(rowState({ active: false }, now), 'off');
+  assert.equal(rowState({ active: true, rateLimitedUntil: '2026-11-09T05:10:00Z' }, now), 'cooling');
+  assert.equal(rowState({ active: true, rateLimitedUntil: '2026-11-09T04:50:00Z' }, now), '');
+  assert.equal(rowState({ active: true, rateLimitedUntil: null }, now), '');
+});
 
 test('refillIn only counts future resets of drawn-down windows', () => {
   const now = Date.parse('2026-11-09T04:30:00Z');
