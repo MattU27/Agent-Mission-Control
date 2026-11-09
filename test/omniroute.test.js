@@ -77,6 +77,13 @@ test('fetchOmni maps combos and calls', async () => {
   assert.ok(r.calls.some(c => c.status === 403 && c.error));
 });
 
+test('fetchOmni drops OmniRoute internal connection-test / model-sync calls', async () => {
+  const calls = [...fx('calls'), { ...fx('calls')[0], id: 'probe', model: 'connection-test', status: 403 }, { ...fx('calls')[0], id: 'sync', model: 'model-sync' }];
+  const r = await fetchOmni(cfg, fakeFetch({ ...ALL, '/api/usage/call-logs': calls }), NOW);
+  assert.equal(r.calls.length, fx('calls').length);
+  assert.ok(!r.calls.some(c => c.id === 'probe' || c.id === 'sync'));
+});
+
 test('fetchOmni reports 401 as not ok without throwing', async () => {
   const r = await fetchOmni(cfg, fakeFetch({ ...ALL, '/api/providers': new Response('{}', { status: 401 }) }), NOW);
   assert.equal(r.ok, false);

@@ -22,6 +22,7 @@ export function normalizeQuota(cache, now = Date.now()) {
 }
 
 const stripProvider = m => (m ?? '').replace(/^[^/]+\//, '');
+const INTERNAL = new Set(['connection-test', 'model-sync']); // OmniRoute's own health probes, not traffic
 
 export async function fetchOmni(cfg, fetchImpl = fetch, now = Date.now()) {
   const get = async path => {
@@ -52,7 +53,7 @@ export async function fetchOmni(cfg, fetchImpl = fetch, now = Date.now()) {
         .filter(c => !c.isHidden)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
         .map(c => ({ name: c.name, strategy: c.strategy, steps: c.models.map(m => ({ id: m.id, model: stripProvider(m.model) })) })),
-      calls: calls.map(c => ({
+      calls: calls.filter(c => !INTERNAL.has(c.model)).map(c => ({
         id: c.id, ts: c.timestamp, model: c.model, account: c.account, connectionId: c.connectionId,
         combo: c.comboName ?? null, step: c.comboStepId ?? null, status: c.status, ms: c.duration, ttft: c.ttft ?? null,
         tin: c.tokens?.in ?? 0, tout: c.tokens?.out ?? 0, tcache: c.tokens?.cacheRead ?? 0, treason: c.tokens?.reasoning ?? 0,

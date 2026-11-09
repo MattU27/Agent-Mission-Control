@@ -1,0 +1,78 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens } from '../public/lib.js';
+
+test('shortModel names the real models', () => {
+  assert.equal(shortModel('antigravity/claude-opus-5-5-high'), 'Opus 5.5');
+  assert.equal(shortModel('claude-sonnet-5-5-high'), 'Sonnet 5.5');
+  assert.equal(shortModel('gemini-4-argon-high'), 'Argon 4');
+  assert.equal(shortModel('gemini-3.8-flash-high'), 'Flash 3.8');
+  assert.equal(shortModel('weird-model'), 'weird-model');
+  assert.equal(shortModel(null), '—');
+});
+
+test('band thresholds at 50 / 20 / 0', () => {
+  assert.equal(band(100), 'deep');
+  assert.equal(band(50), 'deep');
+  assert.equal(band(49.9), 'mid');
+  assert.equal(band(20), 'mid');
+  assert.equal(band(19.9), 'shoal');
+  assert.equal(band(0.4), 'dry');
+  assert.equal(band(null), 'none');
+});
+
+test('fmtDur compacts durations', () => {
+  assert.equal(fmtDur(0), '0m');
+  assert.equal(fmtDur(59e3), '0m');
+  assert.equal(fmtDur(3 * 3600e3 + 12 * 60e3), '3h 12m');
+  assert.equal(fmtDur(6 * 86400e3 + 5 * 3600e3), '6d 5h');
+  assert.equal(fmtDur(-5), '0m');
+});
+
+test('shortAccount keeps the local part', () => {
+  assert.equal(shortAccount('someone.long@gmail.com'), 'someone.long');
+  assert.equal(shortAccount(null), '—');
+});
+
+const NOW = Date.parse('2026-11-09T04:30:00Z');
+const acct = (email, q, active = true) => ({ email, active, quota: q });
+const w = (remainingPct, resetAt) => ({ remainingPct, resetAt });
+
+test('nextHighWater picks soonest future reset of a drawn-down window, active accounts only', () => {
+  const accounts = [
+    acct('a@x', { claude5h: w(100, '2026-11-09T05:00:00Z'), gemini5h: w(80, '2026-11-09T07:00:00Z') }),
+    acct('b@x', { claude5h: w(25, '2026-11-09T06:00:00Z'), claude7d: w(10, '2026-11-09T04:00:00Z') }),
+    acct('c@x', { claude5h: w(1, '2026-11-09T04:40:00Z') }, false),
+  ];
+  assert.deepEqual(nextHighWater(accounts, NOW), { account: 'b@x', window: 'claude5h', resetAt: '2026-11-09T06:00:00Z', remainingPct: 25 });
+  assert.equal(nextHighWater([], NOW), null);
+});
+
+test('callsPerMin averages the last 5 minutes', () => {
+  const calls = [0, 30, 100, 200, 290, 400].map(s => ({ ts: new Date(NOW - s * 1000).toISOString() }));
+  assert.equal(callsPerMin(calls, NOW), 1);
+  assert.equal(callsPerMin([], NOW), 0);
+});
+
+test('stepHits counts calls and errors per combo step by model', () => {
+  const combo = { name: 'agy-brain', steps: [{ model: 'claude-opus-5-5-high' }, { model: 'claude-sonnet-5-5-high' }] };
+  const calls = [
+    { combo: 'agy-brain', model: 'claude-opus-5-5-high', status: 200, ts: '2026-11-09T04:29:00Z' },
+    { combo: 'agy-brain', model: 'claude-opus-5-5-high', status: 403, ts: '2026-11-09T04:28:00Z' },
+    { combo: 'agy-brain', model: 'claude-sonnet-5-5-high', status: 200, ts: '2026-11-09T04:27:00Z' },
+    { combo: 'agy-fast', model: 'claude-opus-5-5-high', status: 200, ts: '2026-11-09T04:26:00Z' },
+  ];
+  assert.deepEqual(stepHits(combo, calls), [
+    { model: 'claude-opus-5-5-high', hits: 2, errors: 1, latest: true },
+    { model: 'claude-sonnet-5-5-high', hits: 1, errors: 0, latest: false },
+  ]);
+});
+
+test('todayTokens sums in/out/cache for the given local day', () => {
+  const rows = [
+    { day: '2026-11-09', in: 10, out: 2, cacheRead: 100 },
+    { day: '2026-11-09', in: 5, out: 1, cacheRead: 0 },
+    { day: '2026-11-08', in: 999, out: 999, cacheRead: 999 },
+  ];
+  assert.deepEqual(todayTokens(rows, '2026-11-09'), { in: 15, out: 3, cacheRead: 100 });
+});
