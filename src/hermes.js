@@ -9,7 +9,7 @@ const SESSIONS_SQL = `
          s.input_tokens AS tin, s.output_tokens AS tout, s.cache_read_tokens AS tcache, s.reasoning_tokens AS treason,
          EXISTS (SELECT 1 FROM session_turn_leases l WHERE l.conversation_id = s.id AND l.expires_at > :now) AS leased
   FROM sessions s
-  WHERE s.hidden = 0 AND (s.ended_at IS NULL OR s.id IN (SELECT id FROM sessions ORDER BY started_at DESC LIMIT 50))
+  WHERE s.hidden = 0 AND (s.ended_at IS NULL OR s.id IN (SELECT id FROM sessions WHERE hidden = 0 ORDER BY started_at DESC LIMIT 50))
   ORDER BY COALESCE(s.last_activity_at, s.started_at) DESC`;
 
 const TOKENS_SQL = `

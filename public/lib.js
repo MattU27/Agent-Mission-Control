@@ -29,6 +29,20 @@ export function fmtDur(ms) {
 
 export const shortAccount = e => (e ? e.split('@')[0] : '—');
 
+// ms until a drawn-down window refills; null when full, unknown, or already past
+export function refillIn(q, now = Date.now()) {
+  if (!q?.resetAt || q.remainingPct == null || q.remainingPct >= 99.5) return null;
+  const ms = Date.parse(q.resetAt) - now;
+  return ms > 0 ? ms : null;
+}
+
+export function sessionWhen(s, now = Date.now()) {
+  if (s.state === 'running') return 'now';
+  if (s.state === 'ended') return s.endedAt ? `${fmtDur(now - s.endedAt * 1000)} ago` : 'ended';
+  const t = s.lastActivityAt ?? s.startedAt;
+  return t ? `idle ${fmtDur(now - t * 1000)}` : 'idle';
+}
+
 export function nextHighWater(accounts, now = Date.now()) {
   let best = null;
   for (const a of accounts) {

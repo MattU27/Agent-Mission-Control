@@ -28,7 +28,9 @@ export function createHub(cfg, adapters = {}) {
     if (sig === sigs[name]) return;
     sigs[name] = sig;
     const patch = { source: name, data: data[name], status: sources[name] };
-    for (const fn of subs) fn(patch);
+    for (const fn of subs) {
+      try { fn(patch); } catch { subs.delete(fn); } // a dead SSE socket must not break the poll loop
+    }
   }
 
   return {

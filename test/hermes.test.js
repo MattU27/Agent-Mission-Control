@@ -80,6 +80,17 @@ test('parseMemory splits only on newline-§-newline and counts chars', () => {
   assert.deepEqual(parseMemory('   ', 10).entries, []);
 });
 
+test('hidden sessions do not crowd visible ones out of the recent-50 window', () => {
+  const home = makeHome();
+  const db = new DatabaseSync(join(home, 'state.db'));
+  const ins = db.prepare('INSERT INTO sessions (id, source, started_at, ended_at, hidden) VALUES (?,?,?,?,1)');
+  for (let i = 0; i < 60; i++) ins.run(`h${i}`, 'subagent', NOW - 50 + i, NOW - 40 + i);
+  db.close();
+  const r = readHermes({ hermesHome: home }, NOW);
+  assert.ok(r.sessions.some(s => s.id === 'c1'), 'visible ended session c1 must still be listed');
+  assert.ok(!r.sessions.some(s => s.id.startsWith('h')));
+});
+
 test('readHermes on missing db returns not ok without throwing', () => {
   const home = mkdtempSync(join(tmpdir(), 'amc-h-'));
   const r = readHermes({ hermesHome: home }, NOW);

@@ -1,4 +1,4 @@
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock } from './lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock, refillIn, sessionWhen } from './lib.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const set = (el, html) => { if (el.__h !== html) { el.innerHTML = html; el.__h = html; } };
@@ -48,7 +48,8 @@ function gauge(q, label) {
   const b = band(q?.remainingPct);
   if (b === 'none') return `<div class="gauge" data-band="none" aria-label="${label}: no data"><span class="tank"></span><span class="read">—</span></div>`;
   const pct = Math.max(0, Math.min(100, q.remainingPct));
-  const reset = q.resetAt ? fmtDur(Date.parse(q.resetAt) - Date.now()) : '';
+  const ms = refillIn(q);
+  const reset = ms ? fmtDur(ms) : '';
   return `<div class="gauge" data-band="${b}" style="--lvl:${pct.toFixed(1)}%" role="img" aria-label="${label}: ${Math.round(pct)}% remaining, ${BAND_WORD[b]}${reset ? `, refills in ${reset}` : ''}">
     <span class="tank"><span class="water"></span></span><span class="read"><span class="pct">${Math.round(pct)}<small>%</small></span><span class="rst">${reset ? `refill ${reset}` : ''}</span></span></div>`;
 }
@@ -131,7 +132,7 @@ export function sessions(el, snap) {
   const walk = (s, depth) => [row(s, depth), ...(byParent.get(s.id) ?? []).flatMap(c => walk(c, depth + 1))];
   const row = (s, depth) => {
     const tok = s.tokens.in + s.tokens.out;
-    const when = s.state === 'ended' ? ago(s.endedAt * 1000) : s.state === 'running' ? 'now' : `idle ${ago(s.lastActivityAt * 1000)}`;
+    const when = sessionWhen(s);
     return `<div class="sess ${s.state}" style="padding-left:${Math.min(depth, 3) * 20}px">
       <span class="st" role="img" aria-label="${s.state}"></span>
       <span class="ttl" title="${esc(s.title)}">${esc((s.title ?? 'Untitled').replace(/^Subagent:\s*/, ''))}${s.state !== 'ended' && s.activity ? `<span class="act">${esc(s.activity)}</span>` : ''}</span>

@@ -57,6 +57,15 @@ test('patches emit only on change', async () => {
   assert.equal(got[1].status.ok, true);
 });
 
+test('a throwing subscriber cannot reject the poll or starve other subscribers', async () => {
+  const hub = createHub(cfg, adapters());
+  const got = [];
+  hub.subscribe(() => { throw new Error('socket gone'); });
+  hub.subscribe(p => got.push(p.source));
+  await hub.poll('hermes'); // must not reject
+  assert.deepEqual(got, ['hermes']);
+});
+
 test('adapter that throws is contained', async () => {
   const hub = createHub(cfg, { ...adapters(), hermes: () => { throw new Error('boom'); } });
   await hub.poll('hermes');

@@ -1,6 +1,23 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens } from '../public/lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, refillIn, sessionWhen } from '../public/lib.js';
+
+test('refillIn only counts future resets of drawn-down windows', () => {
+  const now = Date.parse('2026-11-09T04:30:00Z');
+  assert.equal(refillIn({ remainingPct: 40, resetAt: '2026-11-09T05:30:00Z' }, now), 3600e3);
+  assert.equal(refillIn({ remainingPct: 40, resetAt: '2026-11-09T04:00:00Z' }, now), null); // already elapsed
+  assert.equal(refillIn({ remainingPct: 100, resetAt: '2026-11-09T05:30:00Z' }, now), null); // full
+  assert.equal(refillIn({ remainingPct: 40, resetAt: null }, now), null);
+});
+
+test('sessionWhen never renders epoch-zero ages', () => {
+  const now = 1794198000e3;
+  assert.equal(sessionWhen({ state: 'running' }, now), 'now');
+  assert.equal(sessionWhen({ state: 'ended', endedAt: 1794198000 - 600 }, now), '10m ago');
+  assert.equal(sessionWhen({ state: 'idle', lastActivityAt: null, startedAt: 1794198000 - 7200 }, now), 'idle 2h 0m');
+  assert.equal(sessionWhen({ state: 'idle', lastActivityAt: null, startedAt: null }, now), 'idle');
+  assert.equal(sessionWhen({ state: 'ended', endedAt: null }, now), 'ended');
+});
 
 test('shortModel names the real models', () => {
   assert.equal(shortModel('antigravity/claude-opus-5-5-high'), 'Opus 5.5');
