@@ -81,10 +81,10 @@ function parseRows(xml, shared) {
 
 export function classifyStatus(raw) {
   const s = String(raw ?? '').trim();
+  if (/\b(rejected|declined|closed|withdrawn)\b/i.test(s)) return 'rejected';
   if (/\boffer\b/i.test(s)) return 'offer';
   if (/\binterview\b/i.test(s)) return 'interview';
   if (/\b(action required|replied|response received|shortlist)\b/i.test(s)) return 'action';
-  if (/\b(rejected|declined|closed|withdrawn)\b/i.test(s)) return 'rejected';
   if (/\b(parked|hold|held|skipped|draft|conditional|not submitted)\b/i.test(s)) return 'hold';
   if (/\b(applied|sent|submitted)\b/i.test(s)) return 'awaiting';
   return 'hold';

@@ -122,6 +122,8 @@ test('classifyStatus maps Dora tracker phrasings into exact buckets', () => {
   assert.equal(classifyStatus('Offer received'), 'offer');
   assert.equal(classifyStatus('Application recorded — activation pending; parked by user'), 'hold');
   assert.equal(classifyStatus('Rejected'), 'rejected');
+  assert.equal(classifyStatus('Rejected — 8 Nov 2026; interview completed'), 'rejected');
+  assert.equal(classifyStatus('Withdrawn after offer discussion'), 'rejected');
   assert.equal(classifyStatus(''), 'hold');
 });
 
