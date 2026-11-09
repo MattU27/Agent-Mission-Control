@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, refillIn, sessionWhen, comboTotals, entriesLabel, rowState } from '../public/lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, refillIn, sessionWhen, comboTotals, entriesLabel, rowState, handoffSummary } from '../public/lib.js';
 
 test('comboTotals counts every call tagged with the combo, incl. ones that never reached a step', () => {
   const combo = { name: 'agy-brain', steps: [{ model: 'claude-opus-5-5-high' }, { model: 'claude-sonnet-5-5-high' }] };
@@ -124,4 +124,19 @@ test('todayTokens sums in/out/cache for the given local day', () => {
     { day: '2026-11-08', in: 999, out: 999, cacheRead: 999 },
   ];
   assert.deepEqual(todayTokens(rows, '2026-11-09'), { in: 15, out: 3, cacheRead: 100 });
+});
+
+test('handoffSummary describes pending, answered, and idle Drive queues', () => {
+  assert.deepEqual(
+    handoffSummary({ inboxCount: 2, outboxCount: 1, pendingCount: 1, pending: [{ id: 'TASK-002' }], latest: { id: 'TASK-002', state: 'pending' } }),
+    { live: true, status: '1 pending in Inbox · TASK-002', counts: 'Inbox 2 · Outbox 1' },
+  );
+  assert.deepEqual(
+    handoffSummary({ inboxCount: 1, outboxCount: 1, pendingCount: 0, pending: [], latest: { id: 'TASK-001', state: 'answered' } }),
+    { live: false, status: 'TASK-001 · result in Outbox', counts: 'Inbox 1 · Outbox 1' },
+  );
+  assert.deepEqual(
+    handoffSummary({ inboxCount: 0, outboxCount: 0, pendingCount: 0, pending: [], latest: null }),
+    { live: false, status: 'No handoff files', counts: 'Inbox 0 · Outbox 0' },
+  );
 });

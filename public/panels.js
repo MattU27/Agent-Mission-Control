@@ -1,4 +1,4 @@
-import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock, refillIn, sessionWhen, comboTotals, entriesLabel, rowState } from './lib.js';
+import { shortModel, band, fmtDur, nextHighWater, callsPerMin, stepHits, shortAccount, todayTokens, fmtNum, localDay, clock, refillIn, sessionWhen, comboTotals, entriesLabel, rowState, handoffSummary } from './lib.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const set = (el, html) => { if (el.__h !== html) { el.innerHTML = html; el.__h = html; } };
@@ -168,9 +168,25 @@ export function memory(el, snap) {
 const WARN = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 3.6v4.2M7 9.6v.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 
 export function dora(el, snap) {
-  const s = snap.sources?.dora;
-  if (s?.ok) return set(el, '<p class="empty">Connected.</p>');
-  set(el, `<div class="dora-state">${WARN}Job tracker not connected</div>
-    <p>Dora's Google Sheet isn't readable from this PC yet, so no job counts are shown.</p>
-    <p>Connect via the Hermes google-workspace OAuth (read-only) or Google Drive for Desktop.</p>`);
+  const d = snap.dora, s = snap.sources?.dora;
+  if (!d) {
+    if (s?.error === 'pending') return set(el, '<p class="empty">Reading Dora Drive…</p>');
+    if (s?.error && s.error !== 'not connected') {
+      return set(el, `<div class="dora-state">${WARN}Dora Drive unreachable</div>
+        <p>${esc(s.error)}</p><p>Verify read-only access with gdrive auth status.</p>`);
+    }
+    return set(el, `<div class="dora-state">${WARN}Job tracker not connected</div>
+      <p>Dora's Google Sheet isn't readable from this PC yet, so no job counts are shown.</p>
+      <p>Connect via the Hermes google-workspace OAuth (read-only) or Google Drive for Desktop.</p>`);
+  }
+  const t = d.tracker, hs = handoffSummary(d.handoff);
+  const cell = (n, cls = '') => `<td class="${n ? cls : 'zero'}">${n}</td>`;
+  const rows = t.lanes.map(l => {
+    const act = l.action + l.offer;
+    return `<tr><td>${esc(l.name)}</td>${cell(l.total)}${cell(l.awaiting)}${cell(act, 'hi')}${cell(l.interview, 'hi')}${cell(l.hold)}${cell(l.rejected)}</tr>`;
+  }).join('');
+  set(el, `<table class="lt dt">
+    <thead><tr><th>${t.total} tracked</th><th>Total</th><th>Awaiting</th><th title="Replied, action required, or offer">Action</th><th>Interview</th><th>Hold</th><th>Rejected</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="handoff">${hs.live ? '<span class="buoy" aria-hidden="true"></span>' : ''}<span class="hf-lbl">Handoff</span><span class="hf-st ${hs.live ? 'live' : ''}">${esc(hs.status)}</span><span class="hf-ct">${esc(hs.counts)}</span></div>`);
 }

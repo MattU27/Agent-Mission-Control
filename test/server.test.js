@@ -52,6 +52,9 @@ test('loadConfig reads key from HERMES_HOME/.env and applies defaults', () => {
   assert.equal(cfg.port, 4747);
   assert.equal(cfg.omniUrl, 'http://127.0.0.1:20128');
   assert.equal(cfg.hermesHome, home);
+  assert.equal(cfg.scratchDir, join(home, 'cache', 'scratch'));
+  assert.match(cfg.gdriveBin, /gdrive(\.cmd)?$/);
+  assert.equal(cfg.doraSheetId, '1jW_stbrOp6rvJtObfpENgNQq9zszsSlCivQ3rsnjObY');
 });
 
 test('loadConfig env var overrides .env and missing .env is fine', () => {

@@ -1,14 +1,14 @@
 import { fetchOmni } from './omniroute.js';
 import { readHermes } from './hermes.js';
+import { fetchDora } from './dora.js';
 
-const notConnected = () => ({ ok: false, error: 'not connected' });
 const EVERY = { omni: 5000, hermes: 3000, dora: 600000 };
 
 export function createHub(cfg, adapters = {}) {
   const run = {
     omni: adapters.omni ?? (() => fetchOmni(cfg)),
     hermes: adapters.hermes ?? (() => readHermes(cfg)),
-    dora: adapters.dora ?? notConnected,
+    dora: adapters.dora ?? (() => fetchDora(cfg)),
   };
   const data = {}, sources = {}, sigs = {}, subs = new Set(), timers = [];
   for (const k of Object.keys(run)) { data[k] = null; sources[k] = { ok: false, at: null, error: 'pending' }; }

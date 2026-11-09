@@ -104,3 +104,16 @@ export const fmtNum = n => (n == null ? '—' : n >= 1e6 ? `${(n / 1e6).toFixed(
 export const localDay = (ms = Date.now()) => new Date(ms + 8 * 3600e3).toISOString().slice(0, 10); // UTC+8
 
 export const clock = (ms) => new Date(ms).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Shanghai' });
+
+export function handoffSummary(h) {
+  const counts = `Inbox ${h?.inboxCount ?? 0} · Outbox ${h?.outboxCount ?? 0}`;
+  if (h?.pendingCount > 0) {
+    const ids = (h.pending ?? []).slice(0, 2).map(p => p.id).join(', ');
+    return { live: true, status: `${h.pendingCount} pending in Inbox${ids ? ` · ${ids}` : ''}`, counts };
+  }
+  if (h?.latest) {
+    const where = h.latest.state === 'answered' ? 'result in Outbox' : 'in Inbox';
+    return { live: false, status: `${h.latest.id} · ${where}`, counts };
+  }
+  return { live: false, status: 'No handoff files', counts };
+}

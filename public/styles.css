@@ -199,6 +199,18 @@ table { border-collapse: collapse; width: 100%; }
 .dora-state svg { flex: none; }
 .dora p { font-size: 0.85rem; color: var(--ink-2); max-width: 52ch; }
 .dora p + p { margin-top: var(--s1); color: var(--ink-3); }
+.dt th, .dt td { padding-left: 6px; white-space: nowrap; }
+.dt th:first-child, .dt td:first-child { padding-left: 0; }
+.dt td { color: var(--ink-2); }
+.dt td:first-child, .dt td.hi { color: var(--ink); font-weight: 600; }
+.dt td:first-child { font-weight: 400; }
+.dt td.zero { color: var(--ink-3); }
+.handoff { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s2); padding-top: 6px; border-top: 1px solid var(--rule-soft); font-size: 0.8rem; min-width: 0; }
+.handoff .buoy { margin-right: 0; }
+.handoff .hf-lbl { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); flex: none; }
+.handoff .hf-st { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.handoff .hf-st.live { color: var(--buoy); font-weight: 600; }
+.handoff .hf-ct { margin-left: auto; color: var(--ink-3); white-space: nowrap; flex: none; }
 
 .empty { color: var(--ink-3); font-size: 0.85rem; padding: var(--s2) 0; }
 
