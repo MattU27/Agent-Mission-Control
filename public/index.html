@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Mission Control</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23101a29'/%3E%3Crect y='7' width='16' height='9' fill='%232e6d8e'/%3E%3Cpath d='M0 7q4-2 8 0t8 0' stroke='%23a9d3e0' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="almanac" id="almanac" aria-label="Stack status"></header>
+<main class="chart">
+ <div class="col col-l">
+  <section class="panel tide" aria-labelledby="h-tide">
+    <div class="panel-head"><h2 id="h-tide">Tide table</h2><p class="hint">Remaining quota per account · water refills at reset</p><span class="src" data-src="omni"></span></div>
+    <div id="tide" class="tide-body"></div>
+  </section>
+  <section class="panel routes" aria-labelledby="h-routes">
+    <div class="panel-head"><h2 id="h-routes">Routes</h2><p class="hint">Combo fallback chains · hits among the last 100 gateway calls</p></div>
+    <div id="routes"></div>
+  </section>
+  <div class="pair">
+  <section class="panel memory" aria-labelledby="h-memory">
+    <div class="panel-head"><h2 id="h-memory">Memory</h2><p class="hint">Hermes persistent notes vs char limit</p></div>
+    <div id="memory"></div>
+  </section>
+  <section class="panel dora" aria-labelledby="h-dora">
+    <div class="panel-head"><h2 id="h-dora">Dora pipeline</h2><span class="src" data-src="dora"></span></div>
+    <div id="dora"></div>
+  </section>
+  </div>
+ </div>
+ <div class="col col-r">
+  <section class="panel log" aria-labelledby="h-log">
+    <div class="panel-head"><h2 id="h-log">Soundings</h2><p class="hint">Gateway calls · bar = time to first token, then total</p></div>
+    <div id="log" class="log-body"></div>
+  </section>
+  <section class="panel sessions" aria-labelledby="h-sessions">
+    <div class="panel-head"><h2 id="h-sessions">Hermes sessions</h2><span class="src" data-src="hermes"></span></div>
+    <div id="sessions" class="sessions-body"></div>
+  </section>
+  <section class="panel ledger" aria-labelledby="h-ledger">
+    <div class="panel-head"><h2 id="h-ledger">Today by model</h2><p class="hint">Hermes token usage, UTC+8 day</p></div>
+    <div id="ledger"></div>
+  </section>
+ </div>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

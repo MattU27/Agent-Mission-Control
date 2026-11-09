@@ -1,0 +1,134 @@
+[
+ {
+  "id": "516c413c-9444-43b0-a7e2-d5fa4264b212",
+  "timestamp": "2026-11-09T04:20:05.343Z",
+  "status": 200,
+  "model": "claude-opus-5-5-high",
+  "provider": "antigravity",
+  "account": "acct8@x.test",
+  "connectionId": "e865a941-fef9-4a90-a016-64e1b4c24eda",
+  "duration": 9865,
+  "ttft": 3581,
+  "tokens": {
+   "in": 103349,
+   "out": 1052,
+   "cacheRead": 103019,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-brain",
+  "comboStepId": "agy-brain-m1",
+  "error": null
+ },
+ {
+  "id": "c815a99c-dbd7-4c2a-8802-bc78dafacc27",
+  "timestamp": "2026-11-09T04:19:54.448Z",
+  "status": 200,
+  "model": "claude-opus-5-5-high",
+  "provider": "antigravity",
+  "account": "acct8@x.test",
+  "connectionId": "e865a941-fef9-4a90-a016-64e1b4c24eda",
+  "duration": 2465,
+  "ttft": 2276,
+  "tokens": {
+   "in": 103021,
+   "out": 108,
+   "cacheRead": 100340,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-brain",
+  "comboStepId": "agy-brain-m1",
+  "error": null
+ },
+ {
+  "id": "60e72963-eed5-4fb2-b7e9-ed8c2c32c066",
+  "timestamp": "2026-11-09T04:19:48.792Z",
+  "status": 200,
+  "model": "claude-opus-5-5-high",
+  "provider": "antigravity",
+  "account": "acct8@x.test",
+  "connectionId": "e865a941-fef9-4a90-a016-64e1b4c24eda",
+  "duration": 14970,
+  "ttft": 2223,
+  "tokens": {
+   "in": 100474,
+   "out": 1910,
+   "cacheRead": 100251,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-brain",
+  "comboStepId": "agy-brain-m1",
+  "error": null
+ },
+ {
+  "id": "b5646fd7-6ab2-4beb-9fad-12500c19b579",
+  "timestamp": "2026-11-09T04:19:33.028Z",
+  "status": 200,
+  "model": "claude-opus-5-5-high",
+  "provider": "antigravity",
+  "account": "acct8@x.test",
+  "connectionId": "e865a941-fef9-4a90-a016-64e1b4c24eda",
+  "duration": 2244,
+  "ttft": 2056,
+  "tokens": {
+   "in": 100253,
+   "out": 87,
+   "cacheRead": 97396,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-brain",
+  "comboStepId": "agy-brain-m1",
+  "error": null
+ },
+ {
+  "id": "35a43ce1-645c-44ed-87c0-60cc16ea12e5",
+  "timestamp": "2026-11-09T04:10:58.202Z",
+  "status": 403,
+  "model": "gemini-3.8-flash-high",
+  "provider": "antigravity",
+  "account": "acct11@x.test",
+  "connectionId": "75f4e342-845d-4a08-b43c-b0e3b2c0f552",
+  "duration": 2051,
+  "ttft": null,
+  "tokens": {
+   "in": 0,
+   "out": 0,
+   "cacheRead": null,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-fast",
+  "comboStepId": "agy-fast-model-1-antigravity-gemini-3-8-flash-high",
+  "error": "[403]: Antigravity upstream error (403): Verify your account to continue."
+ },
+ {
+  "id": "54c9f526-4fcc-4fff-9769-31abd05b74b4",
+  "timestamp": "2026-11-09T04:10:57.400Z",
+  "status": 403,
+  "model": "gemini-3.8-flash-high",
+  "provider": "antigravity",
+  "account": "acct11@x.test",
+  "connectionId": "75f4e342-845d-4a08-b43c-b0e3b2c0f552",
+  "duration": 533,
+  "ttft": null,
+  "tokens": {
+   "in": 0,
+   "out": 0,
+   "cacheRead": null,
+   "cacheWrite": null,
+   "reasoning": null,
+   "compressed": null
+  },
+  "comboName": "agy-fast",
+  "comboStepId": null,
+  "error": null
+ }
+]
