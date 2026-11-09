@@ -1,0 +1,89 @@
+{
+ "combos": [
+  {
+   "name": "agy-fast",
+   "models": [
+    {
+     "id": "agy-fast-model-1-antigravity-gemini-3-8-flash-high",
+     "kind": "model",
+     "model": "antigravity/gemini-3.8-flash-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-fast-model-2-antigravity-claude-sonnet-5-5-high",
+     "kind": "model",
+     "model": "antigravity/claude-sonnet-5-5-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-fast-model-3-antigravity-claude-opus-5-5-high",
+     "kind": "model",
+     "model": "antigravity/claude-opus-5-5-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-fast-model-4-antigravity-gemini-4-argon-high",
+     "kind": "model",
+     "model": "antigravity/gemini-4-argon-high",
+     "providerId": "antigravity",
+     "weight": 0
+    }
+   ],
+   "strategy": "priority",
+   "id": "fb8e53ee-4c71-46a2-9cd8-0ef96ffcd7be",
+   "config": {},
+   "isHidden": false,
+   "sortOrder": 1,
+   "createdAt": "2026-11-09T00:27:00.170Z",
+   "updatedAt": "2026-11-09T01:26:10.430Z",
+   "version": 2,
+   "computed_context_length": 1048576
+  },
+  {
+   "name": "agy-brain",
+   "models": [
+    {
+     "id": "agy-brain-m1",
+     "kind": "model",
+     "model": "antigravity/claude-opus-5-5-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-brain-m2",
+     "kind": "model",
+     "model": "antigravity/claude-sonnet-5-5-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-brain-m3",
+     "kind": "model",
+     "model": "antigravity/gemini-4-argon-high",
+     "providerId": "antigravity",
+     "weight": 0
+    },
+    {
+     "id": "agy-brain-m4",
+     "kind": "model",
+     "model": "antigravity/gemini-3.8-flash-high",
+     "providerId": "antigravity",
+     "weight": 0
+    }
+   ],
+   "strategy": "priority",
+   "id": "9a110e22-0347-4a1f-ab34-d6c398d9ab5a",
+   "config": {},
+   "isHidden": false,
+   "sortOrder": 2,
+   "createdAt": "2026-11-09T00:27:00.180Z",
+   "updatedAt": "2026-11-09T02:31:35.470Z",
+   "version": 2,
+   "computed_context_length": 1048576
+  }
+ ],
+ "total": 2
+}

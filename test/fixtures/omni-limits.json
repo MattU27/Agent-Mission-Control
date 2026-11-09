@@ -1,0 +1,623 @@
+{
+ "caches": {
+  "149a5346-f03d-4ac6-8757-7711eb0aca11": {
+   "plan": "Plus",
+   "fetchedAt": "2026-10-23T19:34:16.537Z",
+   "quotas": {
+    "claude-sonnet-4-6": {
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-10-30T19:34:14.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuota"
+    }
+   }
+  },
+  "1f9f9e47-92f8-47e4-8822-1b50899cca5d": {
+   "plan": "k12",
+   "fetchedAt": "2026-11-08T23:45:01.067Z",
+   "quotas": {
+    "session": {
+     "used": 0,
+     "total": 100,
+     "remaining": 100,
+     "resetAt": "2026-11-09T04:44:54.000Z",
+     "unlimited": false,
+     "windowSeconds": 18000
+    },
+    "weekly": {
+     "used": 26,
+     "total": 100,
+     "remaining": 74,
+     "resetAt": "2026-11-09T05:39:12.000Z",
+     "unlimited": false,
+     "windowSeconds": 604800
+    }
+   }
+  },
+  "2eca13c6-be55-4699-8ba4-a1840fd8c335": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:03:07.897Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-09T09:02:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 1,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:24:06.000Z",
+     "remainingPercentage": 99.93296000000001,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 1,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:24:06.000Z",
+     "remainingPercentage": 99.86592,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "54722e01-4cf7-46d1-8a46-d1dac61a4e95": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:16:18.274Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 7,
+     "total": 1000,
+     "resetAt": "2026-11-16T02:45:39.000Z",
+     "remainingPercentage": 99.27866,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 22,
+     "total": 1000,
+     "resetAt": "2026-11-09T07:45:39.000Z",
+     "remainingPercentage": 97.75398,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 11,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:34:42.000Z",
+     "remainingPercentage": 98.92,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 12,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:34:42.000Z",
+     "remainingPercentage": 98.83999999999999,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:15:51.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:15:51.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "585cd2a7-6d23-4f23-a2d5-0df155338943": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:02:59.983Z",
+   "quotas": {
+    "claude-sonnet-4-6": {
+     "used": 0,
+     "total": 1000,
+     "remainingPercentage": 100,
+     "resetAt": "2026-10-30T19:34:14.000Z"
+    }
+   }
+  },
+  "590236ed-e461-47b1-bc4f-7cc7e53d5d7d": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:11:27.847Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 25,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:32.000Z",
+     "remainingPercentage": 97.53941999999999,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 44,
+     "total": 1000,
+     "resetAt": "2026-11-09T09:02:32.000Z",
+     "remainingPercentage": 95.5753,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 8,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:34:38.000Z",
+     "remainingPercentage": 99.2076,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 16,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:34:38.000Z",
+     "remainingPercentage": 98.4152,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:10:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:10:46.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "61fd6c86-a16e-45cd-b3a1-d3f52b84a5a5": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:02:56.793Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 2,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:24:03.000Z",
+     "remainingPercentage": 99.77529000000001,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 8,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:24:03.000Z",
+     "remainingPercentage": 99.21351,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 7,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:31:28.000Z",
+     "remainingPercentage": 99.31672,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 14,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:31:28.000Z",
+     "remainingPercentage": 98.63344,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:50.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:50.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "66afb715-8e44-42d2-b9aa-10c17362c24d": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:08:41.128Z",
+   "quotas": {
+    "claude-sonnet-4-6": {
+     "used": 0,
+     "total": 1000,
+     "remainingPercentage": 100,
+     "resetAt": "2026-10-30T19:34:14.000Z"
+    }
+   }
+  },
+  "75f4e342-845d-4a08-b43c-b0e3b2c0f552": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:11:00.004Z",
+   "quotas": {
+    "claude-sonnet-4-6": {
+     "used": 0,
+     "total": 1000,
+     "remainingPercentage": 100,
+     "resetAt": "2026-10-30T19:34:14.000Z"
+    }
+   }
+  },
+  "989727f5-5b01-48a7-9e75-9ff17213e49e": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:14:34.611Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 78,
+     "total": 1000,
+     "resetAt": "2026-11-14T23:25:51.000Z",
+     "remainingPercentage": 92.22151600000001,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 199,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:27:20.000Z",
+     "remainingPercentage": 80.14363,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 1,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:25:18.000Z",
+     "remainingPercentage": 99.90719999999999,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 2,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:25:18.000Z",
+     "remainingPercentage": 99.8144,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 912,
+     "total": 1000,
+     "resetAt": "2026-11-15T23:52:36.000Z",
+     "remainingPercentage": 8.7652266,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 912,
+     "total": 1000,
+     "resetAt": "2026-11-15T23:52:36.000Z",
+     "remainingPercentage": 8.7652266,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "da0a0c63-e21f-44c3-94a3-932d09a2856d": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:03:06.435Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 2,
+     "total": 1000,
+     "resetAt": "2026-11-16T02:45:39.000Z",
+     "remainingPercentage": 99.83645,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 6,
+     "total": 1000,
+     "resetAt": "2026-11-09T07:45:39.000Z",
+     "remainingPercentage": 99.42758699999999,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T00:31:30.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-09T05:31:30.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:43.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:02:43.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  },
+  "e865a941-fef9-4a90-a016-64e1b4c24eda": {
+   "plan": "Pro",
+   "fetchedAt": "2026-11-09T04:20:05.930Z",
+   "quotas": {
+    "gemini_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 24,
+     "total": 1000,
+     "resetAt": "2026-11-16T02:48:31.000Z",
+     "remainingPercentage": 97.60253,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_session": {
+     "window": "session",
+     "quotaGroupId": "gemini",
+     "quotaAggregate": true,
+     "used": 52,
+     "total": 1000,
+     "resetAt": "2026-11-09T07:48:31.000Z",
+     "remainingPercentage": 94.79551000000001,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 381,
+     "total": 1000,
+     "resetAt": "2026-11-16T02:45:20.000Z",
+     "remainingPercentage": 61.924679999999995,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "claude_gpt_session": {
+     "window": "session",
+     "quotaGroupId": "claude_gpt",
+     "quotaAggregate": true,
+     "used": 749,
+     "total": 1000,
+     "resetAt": "2026-11-09T07:45:20.000Z",
+     "remainingPercentage": 25.072,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "gemini_4_argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:19:59.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    },
+    "argon_weekly": {
+     "window": "weekly",
+     "quotaGroupId": "gemini_4_argon",
+     "quotaAggregate": true,
+     "used": 0,
+     "total": 1000,
+     "resetAt": "2026-11-16T04:19:59.000Z",
+     "remainingPercentage": 100,
+     "unlimited": false,
+     "fractionReported": true,
+     "quotaSource": "retrieveUserQuotaSummary"
+    }
+   }
+  }
+ }
+}
